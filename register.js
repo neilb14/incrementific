@@ -1,6 +1,8 @@
 const buildResponse = require('./lib/build-response');
 const createJWT = require('./lib/create-jwt');
 
+process.env.SHARED_KEY = '616263'
+
 module.exports.handler = async event => {
   if (!event.body) return buildResponse.badRequest('Missing request body');
   try {

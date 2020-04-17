@@ -33,6 +33,14 @@
     npm install
     ```
 
+6. Create you environment configuration file:
+
+    ```bash
+    cp env.template.yml env.yml
+    ```
+
+    And define the required environment variables.
+
 ## Deploy to AWS
 ```bash
   serverless deploy
