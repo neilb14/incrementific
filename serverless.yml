@@ -3,8 +3,11 @@ service: incrementific
 provider:
   name: aws
   runtime: nodejs12.x
+  environment: ${file(env.yml):${self:provider.stage}, file(env.yml):dev}
 
 functions:
+  authorize:
+    handler: lib/auth-policy.handler
   register:
     handler: register.handler
     events:
@@ -13,6 +16,10 @@ functions:
           method: post
   hello:
     handler: handler.hello
-
+    events:
+      - http:
+          path: hello
+          method: get
+          authorizer: authorize
 package:
   individually: true

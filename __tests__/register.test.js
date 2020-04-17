@@ -1,5 +1,9 @@
 const register = require('../register');
 
+process.env.SHARED_KEY = '616263';
+process.env.ISSUER = 'http://incrementific.com';
+process.env.AUDIENCE = 'http://incrementific.com/users';
+
 const buildEvent = body => ({
   body: JSON.stringify(body),
 });
