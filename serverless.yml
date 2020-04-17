@@ -5,6 +5,12 @@ provider:
   runtime: nodejs12.x
 
 functions:
+  register:
+    handler: register.handler
+    events:
+      - http:
+          path: register
+          method: post
   hello:
     handler: handler.hello
 
