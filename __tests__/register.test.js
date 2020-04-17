@@ -27,4 +27,11 @@ describe('Register endpoint', () => {
     expect(response.statusCode).toBe(200);
     expect(JSON.parse(response.body).message).toBe('Successfully registered moose@mailinator.com');
   });
+
+  it('should include a JWT when successful', async () => {
+    const event = buildEvent({ username: 'moose@mailinator.com', password: 'I<3Squirrels' });
+    const response = await register.handler(event);
+    expect(response.statusCode).toBe(200);
+    expect(JSON.parse(response.body).apiKey).toMatch(/^ey/);
+  });
 });
