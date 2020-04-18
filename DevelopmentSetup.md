@@ -33,7 +33,7 @@
     npm install
     ```
 
-6. Create you environment configuration file:
+6. Create your environment configuration file:
 
     ```bash
     cp env.template.yml env.yml

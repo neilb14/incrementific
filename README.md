@@ -2,12 +2,22 @@
 Serverless project to increment a counter
 
 ## Notes
+**Tech Stack:** Serverless Framework, AWS lambdas (Node v12), API Gateway and Redis for storage/concurrency.
+
+Mostly this choice is driven by frugality and familiarity, but, the solution is production ready and highly scalable.
+
+If this were to be used in production, I'd also have a user/identity service generating JWTs (eg. AWS Cognito).
 
 ### Date
 The date you're submitting this.
 
 ### Location of deployed application
 Base path is: `https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/`
+
+The following endpoints are available:
+
+**/register** (POST) - expects JSON object containing `username` and `password` strings in the payload.
+It returns a JSON object with a `message` and `apiKey` strings. The value of `apiKey` should be used as the Bearer token in subsequent requests.
 
 ### Time spent
 How much time did you spend on the assignment? Normally, this is expressed in hours.

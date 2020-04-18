@@ -23,6 +23,7 @@
     "jest": "^25.3.0"
   },
   "dependencies": {
+    "ioredis": "^4.16.2",
     "jsrsasign": "^8.0.15",
     "jwt-decode": "^2.2.0"
   }
