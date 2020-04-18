@@ -30,7 +30,7 @@ How much time did you spend on the assignment? Normally, this is expressed in ho
 
 ### Shortcuts/Compromises made
 I would prefer to use a user or identity service (such as AWS Cognito or Auth0) for this project so didn't spend much time on that part.
-The user service would maintain the user record and issue JWTs. It would also validate the password before regenerating a JWT. The service currently doesn't validate the password when issuing new JWT.
+The user service would maintain the user record and issue JWTs. It would also validate the password before regenerating a JWT. The service currently doesn't validate the password when issuing new JWT. I've stubbed out a fake user service to demonstrate where this would happen.
 
 Here are some other limitations of the current approach:
 - API Key is a JWT token and will expire in 1 month. You can POST to the `/register` endpoint again to get another API Key.
