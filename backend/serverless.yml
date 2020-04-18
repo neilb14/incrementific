@@ -1,0 +1,39 @@
+service: incrementific
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  environment: ${file(env.yml):${self:provider.stage}, file(env.yml):dev}
+
+functions:
+  authorize:
+    handler: src/lib/auth-policy.handler
+  register:
+    handler: register.handler
+    events:
+      - http:
+          path: register
+          method: post
+  next:
+    handler: src/handler.next
+    events:
+      - http:
+          path: next
+          method: get
+          authorizer: authorize
+  current:
+    handler: src/handler.current
+    events:
+      - http:
+          path: current
+          method: get
+          authorizer: authorize
+  set:
+    handler: src/handler.set
+    events:
+      - http:
+          path: set
+          method: put
+          authorizer: authorize                    
+package:
+  individually: true

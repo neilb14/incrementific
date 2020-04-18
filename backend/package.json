@@ -1,0 +1,30 @@
+{
+  "name": "incrementific",
+  "version": "1.0.0",
+  "description": "Serverless project to increment a counter",
+  "main": "handler.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neilb14/incrementific.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neilb14/incrementific/issues"
+  },
+  "homepage": "https://github.com/neilb14/incrementific#readme",
+  "devDependencies": {
+    "jest": "^25.3.0"
+  },
+  "dependencies": {
+    "ioredis": "^4.16.2",
+    "jsrsasign": "^8.0.15",
+    "jwt-decode": "^2.2.0"
+  }
+}
