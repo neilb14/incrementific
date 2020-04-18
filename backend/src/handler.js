@@ -7,7 +7,7 @@ module.exports.next = async event => {
   const result = await storage.incrementKey(key);
   return buildResponse.success({
     message: 'Incremented',
-    result
+    result: parseInt(result, 10),
   });
 };
 
@@ -16,7 +16,7 @@ module.exports.current = async event => {
   const result = await storage.getKey(key);
   return buildResponse.success({
     message: 'Current',
-    result: result || 0,
+    result: result ? parseInt(result, 10) : 0,
   });
 };
 
@@ -24,10 +24,10 @@ module.exports.set = async event => {
   const key = userKey(event);
   if (!event.body || !/^current=\d+/.test(event.body)) return buildResponse.badRequest('expected current=value in payload');
   const value = event.body.split('=')[1];
-  const result = await storage.setKey(key, value);
+  await storage.setKey(key, value);
   return buildResponse.success({
     message: 'Set',
-    result,
+    result: parseInt(value, 10),
   })
 };
 

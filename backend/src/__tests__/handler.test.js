@@ -20,10 +20,12 @@ afterEach(() => {
 
 describe('Handler', () => {
   it ('should return current value', async () => {
+    mockStorage.getKey = jest.fn(() => Promise.resolve(6));
     const result = await handler.current();
     expect(mockStorage.getKey).toHaveBeenCalledWith(expectedUserKey);
     expect(result).toBeDefined();
     expect(result.statusCode).toBe(200);
+    expect(JSON.parse(result.body).result).toBe(6);
   });
 
   it ('should return a current value of 0 when key doesn\'t exist', async () => {
@@ -33,17 +35,21 @@ describe('Handler', () => {
   });
 
   it ('should increment to next value', async () => {
+    mockStorage.incrementKey = jest.fn(() => Promise.resolve(7));
     const result = await handler.next();
     expect(mockStorage.incrementKey).toHaveBeenCalledWith(expectedUserKey);
     expect(result).toBeDefined();
     expect(result.statusCode).toBe(200);
+    expect(JSON.parse(result.body).result).toBe(7);
   });
 
   it ('should set to value', async () => {
+    mockStorage.setKey = jest.fn(() => Promise.resolve(100));
     const result = await handler.set({ body: 'current=100' });
     expect(mockStorage.setKey).toHaveBeenCalledWith(expectedUserKey, '100');
     expect(result).toBeDefined();
     expect(result.statusCode).toBe(200);
+    expect(JSON.parse(result.body).result).toBe(100);
   });
 
   it ('should return a bad request when set does not include a value', async () => {
