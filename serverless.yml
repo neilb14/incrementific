@@ -14,12 +14,26 @@ functions:
       - http:
           path: register
           method: post
-  hello:
-    handler: handler.hello
+  next:
+    handler: handler.next
     events:
       - http:
-          path: hello
+          path: next
           method: get
           authorizer: authorize
+  current:
+    handler: handler.current
+    events:
+      - http:
+          path: current
+          method: get
+          authorizer: authorize
+  set:
+    handler: handler.set
+    events:
+      - http:
+          path: set
+          method: put
+          authorizer: authorize                    
 package:
   individually: true
