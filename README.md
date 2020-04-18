@@ -26,6 +26,7 @@ How much time did you spend on the assignment? Normally, this is expressed in ho
 
 ### Assumptions made
 - We need to support concurrent requests. Therefore using Redis to keep state and enforce consistency in read/set/increment actions.
+- Counter begins at 0
 
 ### Shortcuts/Compromises made
 I would prefer to use a user or identity service (such as AWS Cognito or Auth0) for this project so didn't spend much time on that part.

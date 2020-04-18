@@ -1,9 +1,18 @@
 const handler = require('../handler');
 const mockStorage = require('../lib/storage');
+const userKey = require('../lib/user-key');
 
 jest.mock('../lib/storage');
+jest.mock('../lib/user-key');
+
+const expectedUserKey = 'abc123';
+
+beforeEach(() => {
+  userKey.mockImplementation(() => expectedUserKey);
+})
 
 afterEach(() => {
+  userKey.mockReset();
   mockStorage.getKey.mockReset();
   mockStorage.incrementKey.mockReset();
   mockStorage.setKey.mockReset();
@@ -12,21 +21,27 @@ afterEach(() => {
 describe('Handler', () => {
   it ('should return current value', async () => {
     const result = await handler.current();
-    expect(mockStorage.getKey).toHaveBeenCalled();
+    expect(mockStorage.getKey).toHaveBeenCalledWith(expectedUserKey);
     expect(result).toBeDefined();
     expect(result.statusCode).toBe(200);
   });
 
+  it ('should return a current value of 0 when key doesn\'t exist', async () => {
+    mockStorage.getKey = jest.fn(() => Promise.resolve(null));
+    const result = await handler.current();
+    expect(JSON.parse(result.body).result).toBe(0);
+  });
+
   it ('should increment to next value', async () => {
     const result = await handler.next();
-    expect(mockStorage.incrementKey).toHaveBeenCalled();
+    expect(mockStorage.incrementKey).toHaveBeenCalledWith(expectedUserKey);
     expect(result).toBeDefined();
     expect(result.statusCode).toBe(200);
   });
 
   it ('should set to value', async () => {
     const result = await handler.set({ body: 'current=100' });
-    expect(mockStorage.setKey).toHaveBeenCalledWith('hello', '100');
+    expect(mockStorage.setKey).toHaveBeenCalledWith(expectedUserKey, '100');
     expect(result).toBeDefined();
     expect(result.statusCode).toBe(200);
   });
