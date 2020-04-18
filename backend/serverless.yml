@@ -9,30 +9,30 @@ functions:
   authorize:
     handler: src/lib/auth-policy.handler
   register:
-    handler: register.handler
+    handler: src/register.handler
     events:
       - http:
-          path: register
+          path: v1/register
           method: post
   next:
     handler: src/handler.next
     events:
       - http:
-          path: next
+          path: v1/next
           method: get
           authorizer: authorize
   current:
     handler: src/handler.current
     events:
       - http:
-          path: current
+          path: v1/current
           method: get
           authorizer: authorize
   set:
     handler: src/handler.set
     events:
       - http:
-          path: set
+          path: v1/set
           method: put
           authorizer: authorize                    
 package:
