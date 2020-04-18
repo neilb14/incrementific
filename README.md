@@ -2,11 +2,13 @@
 Serverless project to increment a counter
 
 ## Notes
-**Tech Stack:** Serverless Framework, AWS lambdas (Node v12), API Gateway and Redis for storage/concurrency.
+**Tech Stack:** Serverless Framework, AWS lambdas (Node v12), API Gateway and Redis.
 
 Mostly this choice is driven by frugality and familiarity, but, the solution is production ready and highly scalable.
 
-If this were to be used in production, I'd also have a user/identity service generating JWTs (eg. AWS Cognito).
+I chose to add Redis into the mix because it is free and quick to get set up but it handles concurrency very well. It even has a built in function to increment integers as an atomic operation. Essentially, this API is just a wrapper around Redis :-). If we were to use this in production, I'd create a Redis cluster sized to support the expected load and support high availability. I'd also persist changes to disk.
+
+If this were to be used in production, I'd also have a user/identity service generating JWTs (eg. AWS Cognito). More on that in the shortcuts section below.
 
 ### Date
 The date you're submitting this.
@@ -26,6 +28,10 @@ How much time did you spend on the assignment? Normally, this is expressed in ho
 - We need to support concurrent requests. Therefore using Redis to keep state and enforce consistency in read/set/increment actions.
 
 ### Shortcuts/Compromises made
+I would prefer to use a user or identity service (such as AWS Cognito or Auth0) for this project so didn't spend much time on that part.
+The user service would maintain the user record and issue JWTs. It would also validate the password before regenerating a JWT. The service currently doesn't validate the password when issuing new JWT.
+
+Here are some other limitations of the current approach:
 - API Key is a JWT token and will expire in 1 month. You can POST to the `/register` endpoint again to get another API Key.
 - JWT is not signed with a private key so could be spoofed. Before production use we will create a private key and sign/verify using it.
 
