@@ -18,8 +18,34 @@ Base path is: `https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/`
 
 The following endpoints are available:
 
-**/register** (POST) - expects JSON object containing `username` and `password` strings in the payload.
+**/v1/register** (POST) - Registers for a new API Key. It expects JSON object containing `username` and `password` strings in the payload.
 It returns a JSON object with a `message` and `apiKey` strings. The value of `apiKey` should be used as the Bearer token in subsequent requests.
+
+Example Usage:
+```bash
+curl -X POST https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/v1/register --data '{"username":"moose@mailinator.com", "password":"abc213"}'
+```
+
+**/v1/current** (GET) - Retrieves the current value of the counter. It returns a JSON object with a `message` string and `result` integer containing the current value of the counter. It expects the API key passed in as a the Bearer token in the headers.
+
+Example Usage:
+```bash
+curl https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/v1/current -H 'Authorization: Bearer eyJh....'
+```
+
+**/v1/next** (GET) - It increments the counter and returns a JSON object with a `message` string and `result` integer containing the incremented value. It expects the API key passed in as a the Bearer token in the headers.
+
+Example Usage:
+```bash
+curl https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/v1/next -H 'Authorization: Bearer eyJh....'
+```
+
+**/v1/set** (PUT) - Expects a string in the format `current=value` where value is any positive integer. It sets the current value of the counter and returns a JSON object with a `message` string and `result` integer. It expects the API key passed in as a the Bearer token in the headers.
+
+Example Usage:
+```bash
+curl -X PUT https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/v1/set -H 'Authorization: Bearer eyJh....' --data 'current=1000'
+```
 
 ### Time spent
 How much time did you spend on the assignment? Normally, this is expressed in hours.
