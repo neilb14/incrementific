@@ -14,6 +14,7 @@ functions:
       - http:
           path: v1/register
           method: post
+          cors: true
   next:
     handler: src/handler.next
     events:
@@ -21,6 +22,7 @@ functions:
           path: v1/next
           method: get
           authorizer: authorize
+          cors: true
   current:
     handler: src/handler.current
     events:
@@ -28,12 +30,14 @@ functions:
           path: v1/current
           method: get
           authorizer: authorize
+          cors: true
   set:
     handler: src/handler.set
     events:
       - http:
           path: v1/set
           method: put
-          authorizer: authorize                    
+          authorizer: authorize
+          cors: true
 package:
   individually: true
