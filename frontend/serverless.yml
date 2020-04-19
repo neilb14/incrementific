@@ -1,0 +1,9 @@
+component: website
+name: incrementific
+stage: dev
+
+inputs:
+  src:
+    src: ./src
+    hook: yarn build
+    dist: ./dist
