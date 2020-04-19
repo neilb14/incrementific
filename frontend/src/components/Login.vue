@@ -42,6 +42,17 @@
       </b-container>
       <b-button id="login-form-submit-btn" class="login-form-btn" variant="primary" type="submit">Login</b-button>
     </b-form>
+    <b-container class="providerSpacer">
+      - OR -
+    </b-container>
+    <b-container class="googleSignIn">
+      <g-signin-button
+              :params="googleSignInParams"
+              @success="onGoogleSignInSuccess"
+              @error="onGoogleSignInError">
+        Sign in with Google
+      </g-signin-button>
+    </b-container>
   </div>
 </template>
 
@@ -53,6 +64,9 @@ export default {
       api: {
         endpoint: process.env.VUE_APP_API_URL,
         errors: []
+      },
+      googleSignInParams: {
+        client_id: process.env.VUE_APP_GOOGLE_CLIENT_ID,
       },
       alerts: {
         invalidCredentials: false
@@ -93,13 +107,33 @@ export default {
         this.fieldState.login = false
         this.api.errors.push(e)
       })
+    },
+    onGoogleSignInSuccess (googleUser) {
+      const authResponse = googleUser.getAuthResponse(true);
+      this.clearAlerts()
+      this.$emit('onLoggedIn', {
+        apiKey: authResponse.id_token,
+      })
+    },
+    onGoogleSignInError (error) {
+      this.alerts.invalidCredentials = true
+      console.log('Error while logging in with Google:', error)
     }
   }
 }
 </script>
 
 <style scoped>
-.form-group {
-  text-align: left !important;
-}
+  .g-signin-button {
+    /* This is where you control how the button looks. Be creative! */
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 3px;
+    background-color: #3c82f7;
+    color: #fff;
+    box-shadow: 0 3px 0 #0f69ff;
+  }
+  .providerSpacer {
+    padding: 2em;
+  }
 </style>

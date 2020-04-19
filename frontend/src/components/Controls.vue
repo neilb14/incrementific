@@ -10,7 +10,7 @@
                 <b-button variant="primary" @click="next">Next</b-button>
             </b-col>
         </b-row>
-        <b-card-text class="counter-status" v-if="this.currentValue && !this.loadingValue">
+        <b-card-text class="counter-status" v-if="this.showCurrentValue">
             {{ `Current value: ${currentValue}` }}
         </b-card-text>
         <b-card-text class="counter-status" v-if="this.loadingValue">
@@ -31,6 +31,12 @@
           currentValue: this.initialValue,
           loadingValue: false,
         }
+      },
+      computed: {
+        showCurrentValue() {
+            if (this.loadingValue) return false;
+            return !isNaN(this.currentValue);
+        },
       },
       methods: {
         buildConfig() {
