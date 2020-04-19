@@ -1,19 +1,23 @@
 const jwtDecode = require('jwt-decode');
-const jsrsasign = require('jsrsasign');
+const validateGoogleJwt = require('./validate-google-jwt');
+const validateOwnJwt = require('./validate-own-jwt');
 
 const buildResult = (isValid, claims = {}) => ({
   isValid,
   claims,
-})
+});
 
-module.exports = (token) => {
-  const { SHARED_KEY, ISSUER } = process.env;
+module.exports = async (token) => {
+  const providers = {
+    'accounts.google.com': validateGoogleJwt,
+    [process.env.ISSUER]: validateOwnJwt, 
+  };
   try {
-    const isValid = jsrsasign.jws.JWS.verifyJWT(token, SHARED_KEY, {alg: ['HS256']});
-    const payload = jwtDecode(token);
-    return buildResult(isValid && payload.iss === ISSUER, payload);
+    const claims = jwtDecode(token);
+    if (!(claims.iss in providers)) return buildResult(false);
+    const isValid = await providers[claims.iss](token);
+    return buildResult(isValid, claims);
   } catch (error) {
-    console.error('Unable to validate JWT', error);
     return buildResult(false);
   }
 };

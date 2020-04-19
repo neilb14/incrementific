@@ -12,12 +12,11 @@
 */
 const validateJWT = require('./validate-jwt');
 
-exports.handler = function(event, context, callback) {
-  const [_, token] = event.authorizationToken.split(' ');  
-  const { isValid, claims } = validateJWT(token);
+exports.handler = async (event) => {
+  const [_, token] = event.authorizationToken.split(' ');
+  const { isValid, claims } = await validateJWT(token);
   if (!isValid) {
-    callback('Unauthorized', null);
-    return;
+    throw new Error('Unauthorized');
   } 
 
   const principalId = claims.sub;
@@ -65,7 +64,7 @@ exports.handler = function(event, context, callback) {
   // authResponse.context.arr = ['foo']; <- this is invalid, APIGW will not accept it
   // authResponse.context.obj = {'foo':'bar'}; <- also invalid
 
-  callback(null, authResponse);
+  return authResponse;
 };
 
 /**
