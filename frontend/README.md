@@ -1,12 +1,20 @@
 # Incrementific Vue Front End
 
+## Before you start
+If you want the Sign In with Google button to work you will need to configure your own OAuth client.
+Visit [https://console.developers.google.com/apis/credentials](https://console.developers.google.com/apis/credentials)
+to create a new Oauth 2.0 Client and make note of the generated client ID.
+
 ## Project setup
 ```
 yarn install
 ```
 
 And then create a .env.local file to define environment variables.
-You will need to set the `VUE_APP_API_URL` to the url of your API.
+
+You will need to set the following environment variables:
+- `VUE_APP_API_URL` will be the url of your API
+- `VUE_APP_GOOGLE_CLIENT_ID` will be the Google OAuth client ID available in your Google console
 
 ### Compiles and hot-reloads for development
 ```

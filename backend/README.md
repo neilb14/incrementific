@@ -42,6 +42,18 @@
     And define the required environment variables.
 
 ## Deploy to AWS
+Deploy this service to AWS:
+
 ```bash
   serverless deploy
 ```
+
+## Remove from AWS
+To remove this service stack from AWS you can run:
+
+```bash
+  serverless remove
+```
+
+## Run locally
+You can run this service locally using [Serverless Offline](https://github.com/dherault/serverless-offline).

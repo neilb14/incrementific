@@ -18,10 +18,11 @@ If this were to be used in production, I'd also have a user/identity service gen
 April 20, 2020
 
 ### Location of deployed application
-Base path for API is: `https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/`
-There is a Front End located: [https://dsyedy089j021.cloudfront.net](https://dsyedy089j021.cloudfront.net)
+Base path for API is: `https://8lldynes7j.execute-api.us-east-1.amazonaws.com/dev/`.
 
-The following endpoints are available:
+There is a Front End located here: [https://dsyedy089j021.cloudfront.net](https://dsyedy089j021.cloudfront.net).
+
+The following endpoints are available for the API:
 
 **/v1/register** (POST) - Registers for a new API Key. It expects JSON object containing `username` and `password` strings in the payload.
 It returns a JSON object with a `message` and `apiKey` strings. The value of `apiKey` should be used as the Bearer token in subsequent requests.
@@ -61,22 +62,23 @@ About 9 hours total. 5 on the backend and 4 on the frontend/Google Sign In.
 - Counter begins at 0
 
 ### Shortcuts/Compromises made
+The service currently doesn't validate the password when issuing new JWT.
 I would prefer to use a user or identity service (such as AWS Cognito or Auth0) for this project so didn't spend much time on that part.
 The user service would maintain the user record and issue JWTs. It would also validate the password before regenerating a JWT.
-The service currently doesn't validate the password when issuing new JWT. I've stubbed out a fake user service to demonstrate where this would happen.
+I've stubbed out a fake user service to demonstrate where this would happen.
 
 Here are some other limitations of the current approach:
 - API Key is a JWT token and will expire in 1 month. You can POST to the `/register` endpoint again to get another API Key.
 - JWT is not signed with a private key. Before production use I would create a private key and sign/verify using it.
 
-The front end needs a lot of work: styling, validation on inputs. It is functional but with more time I could make this decent.
+The front end needs a lot of work: styling, validation on inputs, and handling errors. It is functional but definitely not something I would put in front of users/customers.
 
 Further, the Google Sign In button is pretty raw. This app would be rejected by Google because the button doesn't match Google's style guidelines.
 
 ### Stretch goals attempted
-I was able to build a rough UI. It needs some work but it is functional.
-I was able to incorporate OAuth with Google.
-I was able to deploy the app on AWS.
+- I was able to build a rough UI. It needs some work but it is functional.
+- I was able to incorporate OAuth with Google.
+- I was able to deploy the app on AWS.
 
 ### Instructions to run assignment locally
 See the backend [README.md](./backend/README.md) for a local dev environment and AWS deployment instructions. To run locally you can install the Serverless Offline plugin.
