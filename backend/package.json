@@ -25,7 +25,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "ioredis": "^4.16.2",
-    "jsrsasign": "^8.0.15",
+    "jsrsasign": "^8.0.19",
     "jwt-decode": "^2.2.0"
   }
 }
